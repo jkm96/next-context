@@ -5,7 +5,13 @@ export async function POST(request: NextRequest) {
         const requestBody = await request.json();
         const {accessToken, expiresAt, refreshToken} = requestBody;
 
-        const response = NextResponse.json(null, {status: 200});
+        const response = NextResponse.json(
+            {
+                "data":"",
+                "message":"Success",
+                "statusCode":200
+            },
+            {status: 200});
         setCookieOnResponseHeaders(accessToken, refreshToken, expiresAt, response)
 
         return response;

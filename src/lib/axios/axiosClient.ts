@@ -14,8 +14,6 @@ const adminApiClient = axios.create({
 
 adminApiClient.interceptors.request.use(
     function (config) {
-        console.log("axios interceptor",config.url)
-        console.log("axios request headers",config.headers)
 
         return config;
     },

@@ -1,8 +1,7 @@
-import {NextResponse} from "next/server";
-import {StoreTokenRequest} from "@/interfaces/token/tokenInterface";
+import {StoreTokenRequest} from "@/interfaces/token";
 import {apiKey, internalBaseUrl} from "@/constants/appConstants";
 
-export async function storeAccessToken(storeTokenRequest: StoreTokenRequest) {
+export async function storeAccessTokenInCookie(storeTokenRequest: StoreTokenRequest) {
     try {
         const response = await fetch(`${internalBaseUrl}/token/store`, {
             method: 'POST',
@@ -20,7 +19,7 @@ export async function storeAccessToken(storeTokenRequest: StoreTokenRequest) {
     }
 }
 
-export async function getAccessToken(tokenCookie: string) {
+export async function getAccessToken() {
     try {
         const response = await fetch(`${internalBaseUrl}/token/retrieve`, {
             method: 'POST',
@@ -28,8 +27,24 @@ export async function getAccessToken(tokenCookie: string) {
                 'x-api-key':`${apiKey}`,
                 'Content-type': 'application/json',
             },
-            body: JSON.stringify(tokenCookie),
-            credentials: 'same-origin'
+            body: null,
+        });
+
+        return response.json();
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function deleteAccessToken() {
+    try {
+        const response = await fetch(`${internalBaseUrl}/token/delete`, {
+            method: 'POST',
+            headers: {
+                'x-api-key':`${apiKey}`,
+                'Content-type': 'application/json',
+            },
+            body: null,
         });
 
         return response.json();

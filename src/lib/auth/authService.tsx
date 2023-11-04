@@ -1,7 +1,5 @@
-import {LoginUserRequest} from "@/interfaces/auth/loginUserInterface";
-import {RegisterUserRequest} from "@/interfaces/auth/registerUserInterface";
-import {NextResponse} from "next/server";
 import {apiKey, internalBaseUrl} from "@/constants/appConstants";
+import {LoginUserRequest, RegisterUserRequest} from "@/interfaces/auth";
 
 export async function loginUser(loginRequest: LoginUserRequest) {
     try {

@@ -1,10 +1,14 @@
-import {RegisterUserRequest} from "@/interfaces/auth/registerUserInterface";
-import {LoginUserRequest} from "@/interfaces/auth/loginUserInterface";
+import {LoginUserRequest, RegisterUserRequest} from "@/interfaces/auth";
 
 export function isEmailValid (email: string): boolean{
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     return emailPattern.test(email);
+}
+
+export function isValidPhoneNumber(phoneNumber: string): boolean {
+    const regex = /^[0-9]+$/;
+    return regex.test(phoneNumber);
 }
 
 export function validateRegisterFormInputErrors(formData: RegisterUserRequest) {
@@ -41,6 +45,8 @@ export function validateRegisterFormInputErrors(formData: RegisterUserRequest) {
    if (formData.phoneNumber.trim() !== ""){
        if (formData.phoneNumber.trim().length < 8 || formData.phoneNumber.trim().length > 12) {
            errors.phoneNumber = "Phone number must be between 8 and 12 characters long";
+       }else if(!isValidPhoneNumber(formData.phoneNumber.trim())){
+           errors.phoneNumber = "Phone number must contain numbers only";
        }
    }
 

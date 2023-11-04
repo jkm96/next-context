@@ -1,10 +1,8 @@
 import {NextRequest, NextResponse} from "next/server";
-import {getAccessToken} from "@/libs/token/tokenService";
-import {StoreTokenRequest} from "@/interfaces/token/tokenInterface";
 import {setCookieOnResponseHeaders} from "@/helpers/tokenHelpers";
 import {apiKey, cookieName, internalBaseUrl} from "@/constants/appConstants";
-
-
+import {getAccessToken} from "@/lib/token/tokenService";
+import {StoreTokenRequest} from "@/interfaces/token";
 
 export async function middleware(request: NextRequest) {
     if (request.url.includes('/api/')) {
@@ -14,22 +12,20 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (request.url.includes(`${internalBaseUrl}`) && !request.url.includes("login")) {
-        console.log("url", request.url)
-        const tokenCookie = request.cookies.get(`${cookieName}`)?.value as string;
-        if (tokenCookie !== undefined){
-            let tokenResponse:StoreTokenRequest = await getAccessToken(tokenCookie)
-
-            //store new token
-            if (tokenResponse.storeToken){
+    if (request.url.includes(`${internalBaseUrl}`)) {
+        let response = await getAccessToken()
+        if (response.statusCode === 200) {
+            const tokenResponse = response.data;
+            if (tokenResponse.storeToken) {
                 let response = NextResponse.next();
                 const {accessToken, expiresAt, refreshToken} = tokenResponse;
 
-                setCookieOnResponseHeaders(accessToken,refreshToken,expiresAt, response);
+                setCookieOnResponseHeaders(accessToken, refreshToken, expiresAt, response);
 
                 return response;
             }
         }
+
     }
 
     return NextResponse.next();

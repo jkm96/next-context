@@ -1,12 +1,12 @@
 "use client";
 import {Button, Input} from "@nextui-org/react";
 import {useState} from "react";
-import {registerUser} from "@/libs/auth/authService";
-import {RegisterUserRequest} from "@/interfaces/auth/registerUserInterface";
 import {EyeFilledIcon, EyeSlashFilledIcon} from "@nextui-org/shared-icons";
 import {useRouter} from "next/navigation";
 import {validateRegisterFormInputErrors} from "@/helpers/validationHelpers";
 import Link from "next/link";
+import {registerUser} from "@/lib/auth/authService";
+import {RegisterUserRequest} from "@/interfaces/auth";
 
 const initialFormState: RegisterUserRequest = {
     lastName: "", phoneNumber: "",

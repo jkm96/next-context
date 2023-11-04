@@ -3,7 +3,7 @@ import {calculateTokenExpiration} from "@/helpers/dateHelpers";
 
 const cookieName = process.env.COOKIE_NAME as string;
 
-export function setCookieOnResponseHeaders(accessToken: string, refreshToken: string, expiresAt: string, nextResponse: NextResponse<unknown>) {
+export function  setCookieOnResponseHeaders(accessToken: string, refreshToken: string, expiresAt: string, nextResponse: NextResponse<unknown>) {
     let cookieModel = {
         accessToken,
         refreshToken,
