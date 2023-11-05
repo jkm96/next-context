@@ -1,8 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {setCookieOnResponseHeaders} from "@/helpers/tokenHelpers";
-import {apiKey, cookieName, internalBaseUrl} from "@/constants/appConstants";
+import {apiKey, internalBaseUrl} from "@/constants/appConstants";
 import {getAccessToken} from "@/lib/token/tokenService";
-import {StoreTokenRequest} from "@/interfaces/token";
 
 export async function middleware(request: NextRequest) {
     if (request.url.includes('/api/')) {
